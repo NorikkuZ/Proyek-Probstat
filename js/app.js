@@ -44,11 +44,10 @@ function beranda() {
   app.innerHTML = `
   <section class="hero">
     <div>
-      <h1>Kuasai Probabilitas dan Statistika dengan Mudah</h1>
-      <p>StatPeluang adalah platform belajar interaktif: materi lengkap dari konsep dasar peluang sampai semua jenis distribusi, simulasi yang bisa diubah parameternya, dan latihan soal dengan pembahasan.</p>
-      <a class="btn" href="#/materi">Mulai Belajar</a> <a class="btn alt" href="#/latihan">Coba Latihan Soal</a>
+      <h1>Catatan & Simulasi Probabilitas dan Statistika</h1>
+      <p>Kumpulan ringkasan materi dari peluang dasar hingga distribusi kontinu, dilengkapi simulasi interaktif untuk menguji parameter secara langsung serta latihan soal mandiri.</p>
+      <a class="btn" href="#/materi">Mulai Belajar</a> <a class="btn alt" href="#/latihan">Latihan Soal</a>
     </div>
-    <div class="hero-art" aria-hidden="true">🎲 🔔 📊</div>
   </section>
   <section class="stats">
     <div><b>${MATERI.length}</b><span>Materi</span></div>
@@ -68,7 +67,7 @@ function beranda() {
 function materi(id) {
   const idx = Math.max(0, MATERI.findIndex(m => m.id === id));
   const m = MATERI[idx];
-  const sisi = KATEGORI.map(k => `<h4>${k.ikon} ${k.nama}</h4>` +
+  const sisi = KATEGORI.map(k => `<h4>${k.ikon} <span>${k.nama}</span></h4>` +
     MATERI.filter(x => x.kat === k.id).map(x => `<a href="#/materi/${x.id}" class="${x.id === m.id ? 'aktif' : ''}">${x.judul}</a>`).join('')).join('');
   const prev = MATERI[idx - 1], next = MATERI[idx + 1];
   app.innerHTML = `
@@ -94,13 +93,14 @@ function materi(id) {
 let Q = null;                                      // state kuis yang sedang berjalan
 
 function latihan() {
+  const ikonGabungan = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>';
   app.innerHTML = `
   <section class="page">
     <h1>Latihan Soal</h1>
     <p class="muted">Pilih kategori. Soal dan urutan pilihan jawaban diacak setiap kali kuis dimulai. Jawaban dan pembahasan ditampilkan setelah kamu menekan Submit.</p>
     <div class="grid">
       ${KATEGORI.map(k => `<button class="card kat tombol" data-k="${k.id}"><div class="ikon">${k.ikon}</div><h3>${k.nama}</h3><small>${SOAL.filter(s => s.kat === k.id).length} soal</small></button>`).join('')}
-      <button class="card kat tombol gabungan" data-k="gabungan"><div class="ikon">🏆</div><h3>Kuis Gabungan</h3><small>15 soal acak dari semua materi</small></button>
+      <button class="card kat tombol gabungan" data-k="gabungan"><div class="ikon">${ikonGabungan}</div><h3>Kuis Gabungan</h3><small>15 soal acak dari semua materi</small></button>
     </div>
   </section>`;
   app.querySelectorAll('[data-k]').forEach(b => b.onclick = () => mulai(b.dataset.k));
@@ -122,7 +122,7 @@ function tampilSoal() {
   const judul = Q.kat === 'gabungan' ? 'Kuis Gabungan' : katNama(Q.kat);
   app.innerHTML = `
   <section class="page kuis">
-    <div class="kuis-head"><h2>${judul}</h2><div class="timer">⏱ <span id="timer">${waktu((Date.now() - Q.t0) / 1000)}</span></div></div>
+    <div class="kuis-head"><h2>${judul}</h2><div class="timer"><span id="timer">${waktu((Date.now() - Q.t0) / 1000)}</span></div></div>
     <div class="nomor">${Q.list.map((_, n) => `<button class="${n === Q.i ? 'now' : ''} ${Q.ans[n] !== null ? 'jwb' : ''}" data-n="${n}">${n + 1}</button>`).join('')}</div>
     <div class="card">
       <p class="tanya"><b>Soal ${Q.i + 1} dari ${Q.list.length}</b><br>${esc(s.tanya)}</p>
@@ -153,7 +153,7 @@ function selesai() {
   <section class="page">
     <div class="card skor">
       <h1>${skor}%</h1>
-      <p>${skor >= 80 ? 'Bagus sekali! 🎉' : skor >= 60 ? 'Cukup baik, terus berlatih 💪' : 'Pelajari lagi materinya, lalu coba ulangi 📚'}</p>
+      <p>${skor >= 80 ? 'Hasil sangat baik, materi sudah dikuasai.' : skor >= 60 ? 'Cukup baik, perkuat lagi di beberapa bagian.' : 'Pelajari kembali materinya, lalu coba ulangi.'}</p>
       <div class="stats mini"><div><b>${benar}</b><span>Benar</span></div><div><b>${salah}</b><span>Salah</span></div><div><b>${kosong}</b><span>Kosong</span></div><div><b>${waktu(durasi)}</b><span>Waktu</span></div></div>
       <button class="btn" id="ulang">Ulangi Kuis</button> <a class="btn alt" href="#/latihan">Pilih Kategori Lain</a>
     </div>
@@ -162,7 +162,7 @@ function selesai() {
       const a = Q.ans[n], ok = a !== null && s.opts[a].ok, benarIdx = s.opts.findIndex(o => o.ok);
       return `<div class="card bahas ${ok ? 'ok' : 'no'}">
         <p><b>${n + 1}. ${esc(s.tanya)}</b></p>
-        <p>Jawabanmu: ${a === null ? '<i>tidak dijawab</i>' : `${huruf[a]}. ${esc(s.opts[a].t)}`} ${ok ? '✅' : '❌'}</p>
+        <p>Jawabanmu: ${a === null ? '<i>tidak dijawab</i>' : `${huruf[a]}. ${esc(s.opts[a].t)}`} <b>(${ok ? 'Benar' : 'Salah'})</b></p>
         ${ok ? '' : `<p>Jawaban benar: <b>${huruf[benarIdx]}. ${esc(s.opts[benarIdx].t)}</b></p>`}
         <p class="muted">${esc(s.jelas)}</p></div>`;
     }).join('')}

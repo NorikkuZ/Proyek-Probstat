@@ -7,13 +7,13 @@
 const r = String.raw;
 
 const KATEGORI = [
-  { id: 'dasar',     nama: 'Konsep Dasar Peluang',     ikon: '🎲', desk: 'Ruang sampel, kejadian, dan peluang kejadian tunggal.' },
-  { id: 'komplemen', nama: 'Komplemen Kejadian',       ikon: '🔄', desk: 'Kejadian "bukan A" dan hubungannya dengan peluang A.' },
-  { id: 'fh',        nama: 'Frekuensi Harapan',        ikon: '📈', desk: 'Perkiraan banyak kejadian muncul dalam n percobaan.' },
-  { id: 'majemuk',   nama: 'Peluang Kejadian Majemuk', ikon: '🧩', desk: 'Saling lepas, saling bebas, dan peluang bersyarat.' },
-  { id: 'pk',        nama: 'Permutasi dan Kombinasi',  ikon: '🔢', desk: 'Teknik membilang dengan atau tanpa memperhatikan urutan.' },
-  { id: 'diskrit',   nama: 'Distribusi Diskrit',       ikon: '📊', desk: 'Seragam, Bernoulli, Binomial, Geometrik, Binomial Negatif, Hipergeometrik, Poisson.' },
-  { id: 'kontinu',   nama: 'Distribusi Kontinu',       ikon: '🔔', desk: 'Seragam, Eksponensial, Normal, Gamma, Chi-Kuadrat, t-Student, F.' },
+  { id: 'dasar',     nama: 'Konsep Dasar Peluang',     ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/></svg>', desk: 'Ruang sampel, kejadian, dan peluang kejadian tunggal.' },
+  { id: 'komplemen', nama: 'Komplemen Kejadian',       ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z"/></svg>', desk: 'Kejadian "bukan A" dan hubungannya dengan peluang A.' },
+  { id: 'fh',        nama: 'Frekuensi Harapan',        ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', desk: 'Perkiraan banyak kejadian muncul dalam n percobaan.' },
+  { id: 'majemuk',   nama: 'Peluang Kejadian Majemuk', ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>', desk: 'Saling lepas, saling bebas, dan peluang bersyarat.' },
+  { id: 'pk',        nama: 'Permutasi dan Kombinasi',  ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6h7M8 7.8l8 8.4M16 7.8l-8 8.4"/></svg>', desk: 'Teknik membilang dengan atau tanpa memperhatikan urutan.' },
+  { id: 'diskrit',   nama: 'Distribusi Diskrit',       ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><rect x="5" y="12" width="3" height="8" rx="0.5"/><rect x="10.5" y="6" width="3" height="14" rx="0.5"/><rect x="16" y="10" width="3" height="10" rx="0.5"/></svg>', desk: 'Seragam, Bernoulli, Binomial, Geometrik, Binomial Negatif, Hipergeometrik, Poisson.' },
+  { id: 'kontinu',   nama: 'Distribusi Kontinu',       ikon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18"/><path d="M3 17c3.5 0 5-11 9-11s5.5 11 9 11"/></svg>', desk: 'Seragam, Eksponensial, Normal, Gamma, Chi-Kuadrat, t-Student, F.' },
 ];
 
 const MATERI = [
