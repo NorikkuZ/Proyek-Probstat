@@ -3,31 +3,452 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StatPeluang - Belajar Probabilitas dan Statistika</title>
-  <!-- KaTeX untuk menampilkan rumus (butuh internet saat pertama dibuka) -->
+  <title>StatPeluang.OS - Petualangan Probabilitas dan Statistika</title>
+  <!-- Font Pixelify Sans & Lexend serta KaTeX untuk menampilkan rumus -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Pixelify+Sans:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
+  <!-- Tanpa JavaScript: layar intro dilewati supaya Home tetap bisa dipakai -->
+  <noscript><style>
+    .intro { display: none !important; }
+    body.intro-aktif { overflow: auto !important; height: auto !important; }
+    body.intro-aktif .nav, body.intro-aktif .desktop-shell, body.intro-aktif footer, body.intro-aktif .os-taskbar { visibility: visible !important; }
+  </style></noscript>
 </head>
-<body>
+<body class="intro-aktif">
+
+  <!-- ================= LAYAR INTRO: TRUK PETUALANGAN ================= -->
+  <div id="intro" class="intro" tabindex="0" role="region" aria-label="Layar pembuka StatPeluang.OS. Klik di mana saja atau tekan Enter untuk mulai.">
+    <div class="intro-halftone" aria-hidden="true"></div>
+
+    <!-- Awan pixel di lapisan belakang (z-index rendah, ukuran ringkas di area kosong) -->
+    <svg class="awan a1" viewBox="0 0 64 24" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="4" y="12" width="56" height="10" fill="#231f3a"/><rect x="12" y="6" width="20" height="8" fill="#231f3a"/>
+      <rect x="28" y="2" width="22" height="12" fill="#231f3a"/><rect x="46" y="8" width="14" height="6" fill="#231f3a"/>
+      <rect x="6" y="14" width="52" height="6" fill="#ffffff"/><rect x="14" y="8" width="16" height="8" fill="#ffffff"/>
+      <rect x="30" y="4" width="18" height="12" fill="#ffffff"/><rect x="48" y="10" width="10" height="6" fill="#ffffff"/>
+      <rect x="6" y="17" width="52" height="3" fill="#bfe3f5"/>
+    </svg>
+    <svg class="awan a2" viewBox="0 0 64 24" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="4" y="12" width="56" height="10" fill="#231f3a"/><rect x="12" y="6" width="20" height="8" fill="#231f3a"/>
+      <rect x="28" y="2" width="22" height="12" fill="#231f3a"/><rect x="46" y="8" width="14" height="6" fill="#231f3a"/>
+      <rect x="6" y="14" width="52" height="6" fill="#ffffff"/><rect x="14" y="8" width="16" height="8" fill="#ffffff"/>
+      <rect x="30" y="4" width="18" height="12" fill="#ffffff"/><rect x="48" y="10" width="10" height="6" fill="#ffffff"/>
+      <rect x="6" y="17" width="52" height="3" fill="#bfe3f5"/>
+    </svg>
+    <svg class="awan a3" viewBox="0 0 64 24" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="4" y="12" width="56" height="10" fill="#231f3a"/><rect x="12" y="6" width="20" height="8" fill="#231f3a"/>
+      <rect x="28" y="2" width="22" height="12" fill="#231f3a"/><rect x="46" y="8" width="14" height="6" fill="#231f3a"/>
+      <rect x="6" y="14" width="52" height="6" fill="#ffffff"/><rect x="14" y="8" width="16" height="8" fill="#ffffff"/>
+      <rect x="30" y="4" width="18" height="12" fill="#ffffff"/><rect x="48" y="10" width="10" height="6" fill="#ffffff"/>
+      <rect x="6" y="17" width="52" height="3" fill="#bfe3f5"/>
+    </svg>
+
+    <!-- Header mini di dalam kanvas -->
+    <header class="intro-top">
+      <div class="intro-logo">
+        <!-- Ikon truk garis pixel -->
+        <svg viewBox="0 0 24 16" width="46" height="31" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="1" y="2" width="14" height="10" fill="#231f3a"/><rect x="2" y="3" width="12" height="8" fill="#f4f9ff"/>
+          <rect x="3" y="4" width="10" height="2" fill="#231f3a"/>
+          <rect x="3" y="7" width="7" height="3" fill="#231f3a"/><rect x="4" y="8" width="5" height="1" fill="#f4f9ff"/>
+          <rect x="15" y="5" width="8" height="7" fill="#231f3a"/><rect x="16" y="6" width="6" height="5" fill="#f4f9ff"/>
+          <rect x="16" y="6" width="4" height="2" fill="#231f3a"/>
+          <rect x="3" y="11" width="5" height="4" fill="#231f3a"/><rect x="4" y="12" width="3" height="2" fill="#f4f9ff"/>
+          <rect x="16" y="11" width="5" height="4" fill="#231f3a"/><rect x="17" y="12" width="3" height="2" fill="#f4f9ff"/>
+        </svg>
+        <span>STAT<br>OS</span>
+      </div>
+      <p class="intro-blurb">Yuk naik truk petualangan angka! Klik truk atau tombol apa saja di layar untuk mulai bermain dan belajar peluang.</p>
+      <button type="button" id="intro-mulai" class="intro-badge">
+        <b>KLIK LAYAR!</b>
+        <span>MULAI BELAJAR</span>
+      </button>
+    </header>
+
+    <!-- Truk + balon pikiran -->
+    <div class="intro-truk">
+      <svg class="bubble" viewBox="0 0 40 42" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="2" y="0" width="36" height="34" fill="#231f3a"/><rect x="0" y="2" width="40" height="30" fill="#231f3a"/>
+        <rect x="4" y="2" width="32" height="30" fill="#ffffff"/><rect x="2" y="4" width="36" height="26" fill="#ffffff"/>
+        <!-- ekor balon -->
+        <rect x="22" y="32" width="14" height="4" fill="#231f3a"/><rect x="26" y="36" width="10" height="3" fill="#231f3a"/><rect x="30" y="39" width="6" height="3" fill="#231f3a"/>
+        <rect x="24" y="32" width="10" height="3" fill="#ffffff"/><rect x="28" y="35" width="6" height="3" fill="#ffffff"/><rect x="32" y="38" width="2" height="3" fill="#ffffff"/>
+        <!-- dua dadu warna-warni -->
+        <g transform="translate(8 5)">
+          <rect x="1" y="8" width="11" height="11" fill="#231f3a"/><rect x="2" y="9" width="9" height="9" fill="#e71d36"/>
+          <rect x="3" y="10" width="2" height="2" fill="#ffffff"/><rect x="8" y="10" width="2" height="2" fill="#ffffff"/>
+          <rect x="5" y="13" width="2" height="2" fill="#ffffff"/>
+          <rect x="3" y="15" width="2" height="2" fill="#ffffff"/><rect x="8" y="15" width="2" height="2" fill="#ffffff"/>
+          <rect x="12" y="2" width="11" height="11" fill="#231f3a"/><rect x="13" y="3" width="9" height="9" fill="#4cc9f0"/>
+          <rect x="14" y="4" width="2" height="2" fill="#ffffff"/><rect x="17" y="6" width="2" height="2" fill="#f7c038"/>
+          <rect x="20" y="9" width="2" height="2" fill="#ffffff"/>
+        </g>
+      </svg>
+
+      <div class="truk-body">
+        <svg class="truk-svg" viewBox="0 0 128 84" shape-rendering="crispEdges" aria-hidden="true" focusable="false">
+          <defs>
+            <pattern id="pt-garis" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="4" height="8" fill="#e71d36"/><rect x="4" width="4" height="8" fill="#ffe3a3"/></pattern>
+            <pattern id="pt-catur" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#231f3a"/><rect x="2" y="2" width="2" height="2" fill="#231f3a"/></pattern>
+            <pattern id="pt-jarang" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#231f3a"/></pattern>
+          </defs>
+
+          <!-- bayangan tanah -->
+          <rect x="12" y="81" width="106" height="2" fill="#c9dcf2"/>
+
+          <!-- atap: kubah dadu oranye bertitik putih -->
+          <g id="t-atap">
+            <rect x="38" y="2" width="18" height="24" fill="#231f3a"/><rect x="34" y="4" width="26" height="22" fill="#231f3a"/>
+            <rect x="30" y="6" width="34" height="20" fill="#231f3a"/><rect x="28" y="8" width="38" height="18" fill="#231f3a"/>
+            <rect x="26" y="10" width="42" height="16" fill="#231f3a"/>
+            <rect x="40" y="4" width="14" height="22" fill="#ff9f1c"/><rect x="36" y="6" width="22" height="20" fill="#ff9f1c"/>
+            <rect x="32" y="8" width="30" height="18" fill="#ff9f1c"/><rect x="30" y="10" width="34" height="16" fill="#ff9f1c"/>
+            <rect x="28" y="12" width="38" height="14" fill="#ff9f1c"/>
+            <rect x="40" y="4" width="8" height="2" fill="#ffc04d"/><rect x="36" y="6" width="6" height="2" fill="#ffc04d"/><rect x="32" y="8" width="4" height="2" fill="#ffc04d"/>
+            <rect x="62" y="12" width="4" height="14" fill="#e71d36"/><rect x="60" y="10" width="4" height="2" fill="#e71d36"/>
+            <rect x="34" y="12" width="3" height="3" fill="#ffffff"/><rect x="54" y="12" width="3" height="3" fill="#ffffff"/>
+            <rect x="44" y="16" width="3" height="3" fill="#ffffff"/>
+            <rect x="34" y="20" width="3" height="3" fill="#ffffff"/><rect x="54" y="20" width="3" height="3" fill="#ffffff"/>
+          </g>
+
+          <!-- bak belakang: kios dengan kanopi -->
+          <g id="t-bak">
+            <rect x="6" y="24" width="66" height="46" fill="#231f3a"/>
+            <rect x="8" y="26" width="62" height="42" fill="#ff9f1c"/>
+            <rect x="8" y="26" width="62" height="2" fill="#ffc04d"/>
+            <rect x="60" y="28" width="10" height="40" fill="#e71d36"/>
+            <rect x="66" y="28" width="4" height="40" fill="#b3122a"/>
+            <rect x="8" y="62" width="52" height="6" fill="#d9780f"/>
+            <!-- kanopi bergaris -->
+            <rect x="10" y="28" width="52" height="10" fill="#231f3a"/>
+            <rect x="12" y="29" width="48" height="7" fill="url(#pt-garis)"/>
+            <rect x="12" y="36" width="48" height="1" fill="#231f3a"/>
+            <rect x="12" y="38" width="48" height="2" fill="#b3122a"/>
+            <!-- jendela layanan -->
+            <rect x="12" y="40" width="48" height="22" fill="#231f3a"/>
+            <rect x="14" y="42" width="44" height="18" fill="#5a1230"/>
+            <rect x="20" y="46" width="10" height="6" fill="#e71d36"/><rect x="22" y="44" width="6" height="2" fill="#ff7a8a"/>
+            <rect x="42" y="46" width="10" height="6" fill="#e71d36"/><rect x="44" y="44" width="6" height="2" fill="#ff7a8a"/>
+            <rect x="14" y="54" width="44" height="6" fill="#f4f9ff"/>
+            <rect x="14" y="58" width="44" height="2" fill="#b8a6d9"/>
+            <rect x="15" y="43" width="5" height="1" fill="#ffd1dc"/><rect x="15" y="43" width="1" height="5" fill="#ffd1dc"/>
+            <!-- bumper & knalpot belakang -->
+            <rect x="3" y="58" width="5" height="8" fill="#231f3a"/><rect x="4" y="59" width="3" height="6" fill="#ffc04d"/>
+            <rect x="1" y="66" width="6" height="3" fill="#231f3a"/>
+          </g>
+
+          <!-- bayangan catur (dithering) antara bak dan kabin -->
+          <rect x="60" y="34" width="6" height="32" fill="url(#pt-jarang)"/>
+          <rect x="66" y="34" width="4" height="32" fill="url(#pt-catur)"/>
+          <rect x="60" y="52" width="6" height="14" fill="url(#pt-catur)"/>
+
+          <!-- kabin ungu -->
+          <g id="t-kabin">
+            <rect x="72" y="38" width="34" height="32" fill="#231f3a"/>
+            <rect x="104" y="50" width="22" height="20" fill="#231f3a"/>
+            <rect x="74" y="40" width="30" height="28" fill="#3d2662"/>
+            <rect x="74" y="40" width="30" height="3" fill="#7b52ab"/>
+            <rect x="106" y="52" width="18" height="16" fill="#3d2662"/>
+            <rect x="106" y="52" width="18" height="3" fill="#7b52ab"/>
+            <rect x="74" y="62" width="30" height="6" fill="#2c1a4a"/><rect x="106" y="62" width="18" height="6" fill="#2c1a4a"/>
+            <rect x="88" y="60" width="1" height="8" fill="#231f3a"/>
+            <!-- kaca depan mengkilap -->
+            <rect x="76" y="44" width="26" height="16" fill="#231f3a"/>
+            <rect x="78" y="46" width="22" height="12" fill="#4a2f7a"/>
+            <rect x="78" y="46" width="22" height="3" fill="#6a45a5"/>
+            <rect x="80" y="56" width="4" height="2" fill="#c9b7f0"/><rect x="82" y="54" width="4" height="2" fill="#c9b7f0"/>
+            <rect x="84" y="52" width="4" height="2" fill="#c9b7f0"/><rect x="86" y="50" width="4" height="2" fill="#c9b7f0"/>
+            <rect x="88" y="48" width="4" height="2" fill="#c9b7f0"/><rect x="90" y="46" width="4" height="2" fill="#c9b7f0"/>
+            <rect x="90" y="56" width="3" height="2" fill="#9d84d6"/><rect x="92" y="54" width="3" height="2" fill="#9d84d6"/>
+            <rect x="94" y="52" width="3" height="2" fill="#9d84d6"/><rect x="96" y="50" width="3" height="2" fill="#9d84d6"/>
+            <rect x="98" y="48" width="2" height="2" fill="#9d84d6"/>
+            <rect x="96" y="47" width="2" height="2" fill="#ffffff"/>
+            <!-- kisi-kisi -->
+            <rect x="108" y="56" width="8" height="8" fill="#7b52ab"/>
+            <rect x="109" y="58" width="6" height="1" fill="#231f3a"/><rect x="109" y="60" width="6" height="1" fill="#231f3a"/><rect x="109" y="62" width="6" height="1" fill="#231f3a"/>
+            <!-- lampu depan -->
+            <rect x="118" y="54" width="6" height="6" fill="#ffe66d"/>
+            <rect x="120" y="55" width="2" height="4" fill="#ff9f1c"/><rect x="119" y="56" width="4" height="2" fill="#ff9f1c"/>
+            <!-- bumper depan -->
+            <rect x="102" y="68" width="26" height="4" fill="#231f3a"/><rect x="104" y="69" width="22" height="2" fill="#9aa0b4"/>
+          </g>
+          <!-- sorot lampu (hanya tampil saat mesin nyala) -->
+          <g id="t-glow">
+            <rect x="126" y="53" width="10" height="8" fill="#ffe66d"/><rect x="126" y="55" width="16" height="4" fill="#fff3a8"/>
+          </g>
+
+          <!-- lengkung roda -->
+          <rect x="12" y="58" width="24" height="10" fill="#231f3a"/><rect x="14" y="56" width="20" height="2" fill="#231f3a"/>
+          <rect x="92" y="58" width="24" height="10" fill="#231f3a"/><rect x="94" y="56" width="20" height="2" fill="#231f3a"/>
+
+          <!-- roda belakang -->
+          <g transform="translate(14 60)">
+            <rect x="7" y="0" width="6" height="20" fill="#231f3a"/><rect x="4" y="1" width="12" height="18" fill="#231f3a"/>
+            <rect x="2" y="3" width="16" height="14" fill="#231f3a"/><rect x="1" y="5" width="18" height="10" fill="#231f3a"/>
+            <rect x="0" y="6" width="20" height="8" fill="#231f3a"/>
+            <rect x="8" y="3" width="4" height="14" fill="#9aa0b4"/><rect x="6" y="4" width="8" height="12" fill="#9aa0b4"/>
+            <rect x="4" y="6" width="12" height="8" fill="#9aa0b4"/><rect x="3" y="7" width="14" height="6" fill="#9aa0b4"/>
+            <g class="sp-a"><rect x="9" y="4" width="2" height="12" fill="#3d2662"/><rect x="4" y="9" width="12" height="2" fill="#3d2662"/></g>
+            <g class="sp-b"><rect x="6" y="6" width="2" height="2" fill="#3d2662"/><rect x="14" y="14" width="2" height="2" fill="#3d2662"/><rect x="14" y="6" width="2" height="2" fill="#3d2662"/><rect x="6" y="14" width="2" height="2" fill="#3d2662"/><rect x="8" y="8" width="4" height="4" fill="#3d2662"/></g>
+            <rect x="9" y="9" width="2" height="2" fill="#f4f9ff"/>
+          </g>
+          <!-- roda depan -->
+          <g transform="translate(94 60)">
+            <rect x="7" y="0" width="6" height="20" fill="#231f3a"/><rect x="4" y="1" width="12" height="18" fill="#231f3a"/>
+            <rect x="2" y="3" width="16" height="14" fill="#231f3a"/><rect x="1" y="5" width="18" height="10" fill="#231f3a"/>
+            <rect x="0" y="6" width="20" height="8" fill="#231f3a"/>
+            <rect x="8" y="3" width="4" height="14" fill="#9aa0b4"/><rect x="6" y="4" width="8" height="12" fill="#9aa0b4"/>
+            <rect x="4" y="6" width="12" height="8" fill="#9aa0b4"/><rect x="3" y="7" width="14" height="6" fill="#9aa0b4"/>
+            <g class="sp-a"><rect x="9" y="4" width="2" height="12" fill="#3d2662"/><rect x="4" y="9" width="12" height="2" fill="#3d2662"/></g>
+            <g class="sp-b"><rect x="6" y="6" width="2" height="2" fill="#3d2662"/><rect x="14" y="14" width="2" height="2" fill="#3d2662"/><rect x="14" y="6" width="2" height="2" fill="#3d2662"/><rect x="6" y="14" width="2" height="2" fill="#3d2662"/><rect x="8" y="8" width="4" height="4" fill="#3d2662"/></g>
+            <rect x="9" y="9" width="2" height="2" fill="#f4f9ff"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- kepulan asap knalpot (tampil saat mesin nyala) -->
+      <svg class="puff p1" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="6" height="10" fill="#f4f9ff"/><rect x="0" y="3" width="12" height="5" fill="#f4f9ff"/><rect x="6" y="6" width="4" height="4" fill="#c4cadb"/></svg>
+      <svg class="puff p2" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="6" height="10" fill="#e3e7f1"/><rect x="0" y="3" width="12" height="5" fill="#e3e7f1"/><rect x="6" y="6" width="4" height="4" fill="#aab1c6"/></svg>
+      <svg class="puff p3" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="6" height="10" fill="#f4f9ff"/><rect x="0" y="3" width="12" height="5" fill="#f4f9ff"/><rect x="6" y="6" width="4" height="4" fill="#c4cadb"/></svg>
+      <svg class="puff p4" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="6" height="10" fill="#e3e7f1"/><rect x="0" y="3" width="12" height="5" fill="#e3e7f1"/><rect x="6" y="6" width="4" height="4" fill="#aab1c6"/></svg>
+      <!-- garis kecepatan (tampil saat tancap gas) -->
+      <i class="garis g1"></i><i class="garis g2"></i><i class="garis g3"></i>
+    </div>
+
+    <!-- Judul rata kanan -->
+    <h1 class="intro-judul">
+      <span class="j1">STATPELUANG</span>
+      <span class="j2">Belajar</span>
+      <span class="j3">lebih</span>
+      <span class="j4">mudah</span>
+    </h1>
+
+    <p class="intro-url">statpeluang.os / klik truk untuk mulai</p>
+
+    <!-- Kilau bintang kuning -->
+    <svg class="kilau k1" viewBox="0 0 11 11" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="3" height="11" fill="#f7c038"/><rect x="0" y="4" width="11" height="3" fill="#f7c038"/><rect x="3" y="3" width="5" height="5" fill="#ffe9a8"/></svg>
+    <svg class="kilau k2" viewBox="0 0 11 11" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="3" height="11" fill="#f7c038"/><rect x="0" y="4" width="11" height="3" fill="#f7c038"/><rect x="3" y="3" width="5" height="5" fill="#ffe9a8"/></svg>
+    <svg class="kilau k3" viewBox="0 0 11 11" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="3" height="11" fill="#f7c038"/><rect x="0" y="4" width="11" height="3" fill="#f7c038"/><rect x="3" y="3" width="5" height="5" fill="#ffe9a8"/></svg>
+  </div>
+
+  <!-- Top OS Window Navigation Bar -->
   <header class="nav">
-    <a class="logo" href="#/">Stat<span>Peluang</span></a>
-    <nav id="menu">
-      <a href="#/" data-p="">Home</a>
-      <a href="#/materi" data-p="materi">Materi</a>
-      <a href="#/simulasi" data-p="simulasi">Simulasi</a>
-      <a href="#/latihan" data-p="latihan">Latihan Soal</a>
-    </nav>
+    <a class="logo" href="#/">
+      <svg viewBox="0 0 16 16" width="22" height="22" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="4" y="1" width="8" height="2" fill="#5a4e6b"/>
+        <rect x="2" y="3" width="12" height="1" fill="#3b324a"/>
+        <rect x="2" y="4" width="12" height="8" fill="#5ce1e6"/>
+        <rect x="3" y="5" width="10" height="6" fill="#ffea6c"/>
+        <rect x="5" y="6" width="2" height="2" fill="#231924"/>
+        <rect x="9" y="6" width="2" height="2" fill="#231924"/>
+        <rect x="5" y="9" width="6" height="1" fill="#231924"/>
+        <rect x="1" y="12" width="14" height="2" fill="#4cc9f0"/>
+      </svg>
+      Stat<span>Peluang</span>.OS
+    </a>
+    <div class="nav-kanan">
+      <!-- Tombol kembali ke layar intro truk -->
+      <button type="button" class="btn-intro" data-intro title="Kembali ke layar pembuka truk">
+        <svg viewBox="0 0 24 16" width="26" height="17" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="1" y="2" width="14" height="10" fill="#231f3a"/><rect x="2" y="3" width="12" height="8" fill="#ff9f1c"/>
+          <rect x="3" y="4" width="8" height="1" fill="#e71d36"/><rect x="3" y="5" width="8" height="4" fill="#5a1230"/>
+          <rect x="3" y="8" width="8" height="1" fill="#f4f9ff"/><rect x="12" y="3" width="2" height="8" fill="#e71d36"/>
+          <rect x="15" y="5" width="8" height="7" fill="#231f3a"/><rect x="16" y="6" width="6" height="5" fill="#3d2662"/>
+          <rect x="16" y="6" width="4" height="3" fill="#b9a2e8"/><rect x="21" y="9" width="2" height="1" fill="#ffe66d"/>
+          <rect x="3" y="11" width="5" height="4" fill="#231f3a"/><rect x="4" y="12" width="3" height="2" fill="#9aa0b4"/>
+          <rect x="16" y="11" width="5" height="4" fill="#231f3a"/><rect x="17" y="12" width="3" height="2" fill="#9aa0b4"/>
+        </svg>
+        <span>INTRO</span>
+      </button>
+      <nav id="menu">
+        <a href="#/" data-p="">Home</a>
+        <a href="#/materi" data-p="materi">Materi</a>
+        <a href="#/simulasi" data-p="simulasi">Simulasi</a>
+        <a href="#/latihan" data-p="latihan">Latihan Soal</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="app"></main>
+  <!-- Desktop Workspace: Left Desktop Icons + Main Application Window Area -->
+  <div class="desktop-shell">
+    <aside class="desktop-icons" aria-label="Shortcut Desktop">
+      <a class="d-icon nav-shortcut" href="#/" data-p="">
+        <div class="d-art anim-float">
+          <!-- Mr. Computer Icon -->
+          <svg viewBox="0 0 24 24" width="52" height="52" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="7" y="1" width="10" height="3" fill="#4a3f59"/>
+            <rect x="5" y="4" width="14" height="2" fill="#231924"/>
+            <rect x="3" y="6" width="18" height="12" fill="#38b6ff"/>
+            <rect x="4" y="7" width="16" height="10" fill="#5ce1e6"/>
+            <rect x="6" y="8" width="12" height="8" fill="#ffe66d"/>
+            <rect class="eye-blink" x="8" y="10" width="2" height="2" fill="#231924"/>
+            <rect class="eye-blink" x="14" y="10" width="2" height="2" fill="#231924"/>
+            <rect x="8" y="13" width="1" height="1" fill="#231924"/>
+            <rect x="9" y="14" width="6" height="1" fill="#231924"/>
+            <rect x="15" y="13" width="1" height="1" fill="#231924"/>
+            <rect x="5" y="18" width="14" height="2" fill="#4895ef"/>
+            <rect x="2" y="20" width="20" height="2" fill="#72efdd"/>
+          </svg>
+        </div>
+        <span>MR. COMPUTER</span>
+      </a>
+
+      <a class="d-icon nav-shortcut" href="#/materi" data-p="materi">
+        <div class="d-art">
+          <!-- Folder Materi Icon -->
+          <svg viewBox="0 0 24 24" width="52" height="52" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="2" y="4" width="8" height="3" fill="#ff9f1c"/>
+            <rect x="2" y="7" width="20" height="14" fill="#ffbf69"/>
+            <rect x="4" y="6" width="16" height="5" fill="#ffffff"/>
+            <rect x="6" y="8" width="10" height="1" fill="#b5179e"/>
+            <rect x="3" y="10" width="18" height="10" fill="#ffca3a"/>
+            <rect x="2" y="4" width="20" height="17" fill="none" stroke="#231924" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>FOLDER MATERI</span>
+      </a>
+
+      <a class="d-icon nav-shortcut" href="#/simulasi" data-p="simulasi">
+        <div class="d-art">
+          <!-- Globe / Lab Simulasi Icon -->
+          <svg viewBox="0 0 24 24" width="52" height="52" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="6" y="2" width="12" height="20" fill="#00bbf9"/>
+            <rect x="2" y="6" width="20" height="12" fill="#00bbf9"/>
+            <rect x="4" y="4" width="16" height="16" fill="#00f5d4"/>
+            <rect x="7" y="5" width="5" height="4" fill="#80ed99"/>
+            <rect x="13" y="8" width="5" height="6" fill="#57cc99"/>
+            <rect x="6" y="13" width="6" height="5" fill="#80ed99"/>
+            <rect x="7" y="8" width="7" height="7" fill="#ffffff"/>
+            <rect x="9" y="10" width="3" height="3" fill="#231924"/>
+            <rect x="4" y="15" width="4" height="3" fill="#ffbe0b"/>
+          </svg>
+        </div>
+        <span>SIMULASI.EXE</span>
+      </a>
+
+      <a class="d-icon nav-shortcut" href="#/latihan" data-p="latihan">
+        <div class="d-art">
+          <!-- Quiz Game / Star Trophy Icon -->
+          <svg viewBox="0 0 24 24" width="52" height="52" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" fill="#b5179e"/>
+            <rect x="4" y="4" width="16" height="16" fill="#ff70a6"/>
+            <rect x="11" y="5" width="2" height="3" fill="#ffea00"/>
+            <rect x="6" y="8" width="12" height="3" fill="#ffea00"/>
+            <rect x="8" y="11" width="8" height="3" fill="#ffbe0b"/>
+            <rect x="7" y="14" width="3" height="4" fill="#ffea00"/>
+            <rect x="14" y="14" width="3" height="4" fill="#ffea00"/>
+          </svg>
+        </div>
+        <span>QUIZ_GAME.EXE</span>
+      </a>
+
+      <a class="d-icon" href="#/materi/binomial" title="Pintasan Cepat: Distribusi Binomial">
+        <div class="d-art">
+          <!-- Floppy (A:) Icon -->
+          <svg viewBox="0 0 24 24" width="52" height="52" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="3" y="2" width="18" height="20" fill="#8338ec"/>
+            <rect x="4" y="3" width="16" height="18" fill="#a9def9"/>
+            <rect x="6" y="3" width="12" height="8" fill="#ffffff"/>
+            <rect x="8" y="5" width="8" height="1" fill="#231924"/>
+            <rect x="8" y="7" width="8" height="1" fill="#231924"/>
+            <rect x="7" y="14" width="10" height="7" fill="#5e548e"/>
+            <rect x="11" y="15" width="3" height="5" fill="#ffffff"/>
+          </svg>
+        </div>
+        <span>FLOPPY (A:)</span>
+      </a>
+
+      <!-- Ikon desktop: kembali ke layar intro truk -->
+      <button type="button" class="d-icon d-intro" data-intro title="Kembali ke layar pembuka truk">
+        <span class="d-art">
+          <svg viewBox="0 0 24 16" width="58" height="39" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="1" y="2" width="14" height="10" fill="#231f3a"/><rect x="2" y="3" width="12" height="8" fill="#ff9f1c"/>
+            <rect x="3" y="4" width="8" height="1" fill="#e71d36"/><rect x="3" y="5" width="8" height="4" fill="#5a1230"/>
+            <rect x="3" y="8" width="8" height="1" fill="#f4f9ff"/><rect x="12" y="3" width="2" height="8" fill="#e71d36"/>
+            <rect x="15" y="5" width="8" height="7" fill="#231f3a"/><rect x="16" y="6" width="6" height="5" fill="#3d2662"/>
+            <rect x="16" y="6" width="4" height="3" fill="#b9a2e8"/><rect x="21" y="9" width="2" height="1" fill="#ffe66d"/>
+            <rect x="3" y="11" width="5" height="4" fill="#231f3a"/><rect x="4" y="12" width="3" height="2" fill="#9aa0b4"/>
+            <rect x="16" y="11" width="5" height="4" fill="#231f3a"/><rect x="17" y="12" width="3" height="2" fill="#9aa0b4"/>
+          </svg>
+        </span>
+        <span>TRUK_INTRO.EXE</span>
+      </button>
+    </aside>
+
+    <main id="app"></main>
+  </div>
 
   <footer>
-    <p><b>StatPeluang</b> · Media belajar mandiri Probabilitas dan Statistika.</p>
-    <p>Proyek Praktikum Probabilitas dan Statistika · 2026</p>
+    <p><b>STATPELUANG.OS v95.2</b>: Media belajar mandiri Probabilitas dan Statistika.</p>
+    <p>Proyek Praktikum Probabilitas dan Statistika (2026)</p>
   </footer>
+
+  <!-- Retro Windows 95 / Y2K Bottom Taskbar (100% SVG Pixel Icons, Tanpa Emoji) -->
+  <div class="os-taskbar" role="region" aria-label="Taskbar Sistem">
+    <a href="#/" class="start-btn">
+      <svg viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="1" y="1" width="6" height="6" fill="#ff595e"/>
+        <rect x="9" y="1" width="6" height="6" fill="#8ac926"/>
+        <rect x="1" y="9" width="6" height="6" fill="#1982c4"/>
+        <rect x="9" y="9" width="6" height="6" fill="#ffca3a"/>
+      </svg>
+      <span>START</span>
+    </a>
+    <div class="task-divider"></div>
+    <div class="task-tabs">
+      <a href="#/" data-p="" class="task-tab">
+        <svg viewBox="0 0 16 16" width="15" height="15" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="2" y="2" width="12" height="9" fill="#231924"/><rect x="3" y="3" width="10" height="7" fill="#4cc9f0"/>
+          <rect x="4" y="4" width="8" height="5" fill="#ffea00"/><rect x="5" y="11" width="6" height="2" fill="#231924"/>
+          <rect x="3" y="13" width="10" height="1" fill="#231924"/>
+        </svg>
+        <span>Beranda</span>
+      </a>
+      <a href="#/materi" data-p="materi" class="task-tab">
+        <svg viewBox="0 0 16 16" width="15" height="15" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="1" y="3" width="6" height="2" fill="#ff9f1c"/><rect x="1" y="5" width="14" height="9" fill="#231924"/>
+          <rect x="2" y="6" width="12" height="7" fill="#ffca3a"/>
+        </svg>
+        <span>Materi</span>
+      </a>
+      <a href="#/simulasi" data-p="simulasi" class="task-tab">
+        <svg viewBox="0 0 16 16" width="15" height="15" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="2" y="2" width="12" height="12" fill="#231924"/><rect x="3" y="3" width="10" height="10" fill="#72efdd"/>
+          <rect x="4" y="8" width="2" height="4" fill="#ff2a85"/><rect x="7" y="5" width="2" height="7" fill="#ffea00"/>
+          <rect x="10" y="6" width="2" height="6" fill="#3a56e4"/>
+        </svg>
+        <span>Simulasi</span>
+      </a>
+      <a href="#/latihan" data-p="latihan" class="task-tab">
+        <svg viewBox="0 0 16 16" width="15" height="15" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="7" y="1" width="2" height="3" fill="#231924"/><rect x="2" y="5" width="12" height="3" fill="#231924"/>
+          <rect x="4" y="8" width="8" height="4" fill="#231924"/><rect x="7" y="2" width="2" height="9" fill="#ffea00"/>
+          <rect x="3" y="6" width="10" height="2" fill="#ffea00"/><rect x="5" y="8" width="6" height="3" fill="#ff9f1c"/>
+        </svg>
+        <span>Kuis</span>
+      </a>
+      <!-- Tab kembali ke layar intro truk (ikon SVG pixel, tanpa emoji) -->
+      <button type="button" class="task-intro" data-intro title="Kembali ke layar pembuka truk">
+        <svg viewBox="0 0 24 16" width="22" height="15" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="1" y="2" width="14" height="10" fill="#231f3a"/><rect x="2" y="3" width="12" height="8" fill="#ff9f1c"/>
+          <rect x="3" y="4" width="8" height="1" fill="#e71d36"/><rect x="3" y="5" width="8" height="4" fill="#5a1230"/>
+          <rect x="3" y="8" width="8" height="1" fill="#f4f9ff"/><rect x="12" y="3" width="2" height="8" fill="#e71d36"/>
+          <rect x="15" y="5" width="8" height="7" fill="#231f3a"/><rect x="16" y="6" width="6" height="5" fill="#3d2662"/>
+          <rect x="16" y="6" width="4" height="3" fill="#b9a2e8"/><rect x="21" y="9" width="2" height="1" fill="#ffe66d"/>
+          <rect x="3" y="11" width="5" height="4" fill="#231f3a"/><rect x="4" y="12" width="3" height="2" fill="#9aa0b4"/>
+          <rect x="16" y="11" width="5" height="4" fill="#231f3a"/><rect x="17" y="12" width="3" height="2" fill="#9aa0b4"/>
+        </svg>
+        <span>Intro</span>
+      </button>
+    </div>
+    <div class="task-tray">
+      <span class="tray-led" title="System Ready"></span>
+      <span id="os-clock">12:00</span>
+    </div>
+  </div>
 
   <!-- Library pihak ketiga (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -38,5 +459,6 @@
   <script src="js/soal.js"></script>
   <script src="js/simulasi.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/intro.js"></script>
 </body>
 </html>
